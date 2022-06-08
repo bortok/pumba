@@ -119,12 +119,12 @@ RUN apk --update add ca-certificates
 #
 # ------ Pumba release Docker image ------
 #
-FROM scratch
+FROM netreplica/ubuntu-host:1.2
 
 # copy CA certificates
 COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 # this is the last command since it's never cached
-COPY --from=build-and-test /go/src/pumba/.bin/github.com/alexei-led/pumba /pumba
+COPY --from=build-and-test /go/src/pumba/.bin/github.com/alexei-led/pumba /usr/local/bin/pumba
 
-ENTRYPOINT ["/pumba"]
+CMD ["/usr/local/bin/pumba"]
